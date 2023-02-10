@@ -1,0 +1,22 @@
+[tool.poetry]
+name = "sitecheck"
+version = "0.1.0"
+description = "Tools to check a website and create reports on the site's health"
+authors = ["Neil Johnson <neil@cadent.com>"]
+license = "MIT"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+
+[tool.poetry.group.dev.dependencies]
+black = "^23.1.0"
+isort = "^5.12.0"
+flake8 = "^6.0.0"
+mypy = "^1.0.0"
+pytest = "^7.2.1"
+pytest-cov = "^4.0.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
