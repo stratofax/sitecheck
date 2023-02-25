@@ -12,8 +12,6 @@ def link_spider(url: str, links: set) -> int:
         soup = BeautifulSoup(page.content, "html.parser")
         for link in soup.find_all("a"):
             href = link.get("href")
-            # This doesn't work for site root links, like '/about.html'
-            # if href and url in href:
             links.add(href)
     return status
 
@@ -30,8 +28,11 @@ if __name__ == "__main__":
     links = set()
     status = link_spider(url, links)
     if status == OK:
-        print(f"Unique links found on page {url} (response {status}):")
-        for link in links:
+        print(
+            f"Found {len(links)} unique links on page {url} (response {status}):"
+        )
+        sorted_links = sorted(list(links))
+        for link in sorted_links:
             print(link)
     else:
         print(f"Could not fetch the page - response {status}")
