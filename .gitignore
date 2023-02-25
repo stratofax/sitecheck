@@ -128,5 +128,8 @@ dmypy.json
 # Pyre type checker
 .pyre/
 
+# Mac junk
+.DS_Store
+
 # For this project
 .vscode
