@@ -5,6 +5,7 @@ OK = 200
 
 
 def link_spider(url: str, links: set) -> int:
+    """Fetch a page and extract all links from it, returning the status code."""
     page = requests.get(url)
     status = page.status_code
     if status == OK:
@@ -18,11 +19,18 @@ def link_spider(url: str, links: set) -> int:
 
 
 if __name__ == "__main__":
-    url = "https://example.com/"
+    # Test the spider
+
+    # Check for a command line argument
+    import sys
+
+    # use default URL if no argument is given
+    url = sys.argv[1] if len(sys.argv) > 1 else "https://example.com/"
+
     links = set()
     status = link_spider(url, links)
     if status == OK:
-        print(f"Links found (response {status}):")
+        print(f"Unique links found on page {url} (response {status}):")
         for link in links:
             print(link)
     else:
