@@ -5,7 +5,10 @@ OK = 200
 
 
 def link_spider(url: str, links: set) -> int:
-    """Fetch a page and extract all links from it, returning the status code."""
+    """
+    Fetch a page and extract all links from it,
+    returning the status code.
+    """
     page = requests.get(url)
     status = page.status_code
     if status == OK:
@@ -27,12 +30,13 @@ if __name__ == "__main__":
 
     links = set()
     status = link_spider(url, links)
+    print(f"Status code: {status}")
     if status == OK:
         print(
-            f"Found {len(links)} unique links on page {url} (response {status}):"
+            f"Found {len(links)} unique links on page {url}:"
         )
         sorted_links = sorted(list(links))
         for link in sorted_links:
             print(link)
     else:
-        print(f"Could not fetch the page - response {status}")
+        print("Could not fetch the page")
