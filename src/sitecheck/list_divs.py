@@ -13,7 +13,8 @@ def list_divs(url):
     if response.status_code != 200:
         return None
     soup = BeautifulSoup(response.text, "html.parser")
-    return soup.find_all("div")
+    divs = soup.find_all("div")
+    return [div.get("class") for div in divs]
 
 
 if __name__ == "__main__":

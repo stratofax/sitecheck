@@ -12,7 +12,7 @@ After you've cloned this repo onto your local machine, run:
 cd /path/to/sitecheck-repo/
 poetry install
 cd /src/sitecheck
-poetry run python -m spider.py
+poetry run python spider.py
 ```
 
 ## spider.py
