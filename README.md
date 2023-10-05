@@ -19,4 +19,8 @@ poetry run python spider.py
 
 Extracts a list of unique links from the specified page.
 
+## spider_file.py
+
+Extracts a list of unique links from an HTML file.
+
 ## list_divs.py
