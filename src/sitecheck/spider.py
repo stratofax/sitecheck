@@ -35,8 +35,7 @@ if __name__ == "__main__":
         print(
             f"Found {len(links)} unique links on page {url}:"
         )
-        sorted_links = sorted(list(links))
-        for link in sorted_links:
+        for link in links:
             print(link)
     else:
         print("Could not fetch the page")
