@@ -33,6 +33,5 @@ if __name__ == "__main__":
     print(
         f"Found {len(links)} unique links on page {filename}:"
     )
-    # sorted_links = sorted(list(links))
     for link in links:
         print(link)
