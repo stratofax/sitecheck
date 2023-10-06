@@ -24,7 +24,7 @@ def scrape_div(html: str, div_class: str, remove_divs: str = None) -> str:
     new_body = div.decode_contents()
 
     return (
-        f'<html><head><meta charset="UTF-8">'
+        f'<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8">'
         f"<title>{title}</title></head>"
         f"<body>{new_body}</body></html>"
     )
