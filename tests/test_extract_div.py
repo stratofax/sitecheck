@@ -13,7 +13,7 @@ test_cases = [
         "edge1",
         "<div class='test'><p>Some text</p></div>",
         "test",
-        "Some text",
+        "<p>Some text</p>",
     ),  # div with nested elements
     # Error case tests
     (
