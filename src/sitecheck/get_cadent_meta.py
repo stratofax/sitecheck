@@ -1,7 +1,8 @@
 """
-Write HTML meta data to JSON
+Write HTML meta data to JSON from Cadent web files
 """
 
+import json
 import sys
 
 from bs4 import BeautifulSoup
@@ -17,10 +18,12 @@ def parse_meta(html: str):
     soup = BeautifulSoup(html, "html.parser")
     post_title = clean_title(soup.title.string)
     post_date = soup.time["datetime"]
+    tags = [tag.text for tag in soup.find_all("a", attrs={"rel": "tag"})]
 
-    return {"post_title": post_title, "post_date": post_date}
+    return {"post_title": post_title, "post_date": post_date, "tags": tags}
 
 
 if __name__ == "__main__":  # pragma: no cover
     with sys.stdin as html:
-        print(parse_meta(html.read()))
+        metadata = parse_meta(html.read())
+    print(json.dumps(metadata, indent=4))
