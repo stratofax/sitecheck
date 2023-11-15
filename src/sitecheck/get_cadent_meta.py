@@ -4,6 +4,7 @@ Write HTML meta data to JSON from Cadent web files
 
 import json
 import sys
+from datetime import datetime
 
 from bs4 import BeautifulSoup
 
@@ -14,10 +15,16 @@ def clean_title(title: str) -> str:
     return title.replace(" – Cadent", "")
 
 
+def gdate(long_date: str) -> str:
+    datetime_object = datetime.strptime(long_date, "%Y-%m-%dT%H:%M:%S%z")
+    return datetime_object.strftime("%Y-%m-%d")
+
+
 def parse_meta(html: str):
     soup = BeautifulSoup(html, "html.parser")
     post_title = clean_title(soup.title.string)
-    post_date = soup.time["datetime"]
+
+    post_date = gdate(soup.time["datetime"])
     tags = [tag.text for tag in soup.find_all("a", attrs={"rel": "tag"})]
     # write post_title to post_title.txt
     # write post_date to post_date.txt
