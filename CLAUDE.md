@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-Sitecheck is a Python-based web scraping and HTML analysis tool for extracting information from websites and HTML files. It creates reports on a site's structural and link health.
+Sitecheck is a Python-based HTML analysis tool for extracting and processing information from HTML files. It provides modular utilities that can be piped together Unix-style.
 
 ## Commands
 
@@ -12,12 +12,17 @@ Sitecheck is a Python-based web scraping and HTML analysis tool for extracting i
 # Install dependencies
 poetry install
 
-# Run scripts (from project root)
-poetry run python src/sitecheck/spider.py [URL]           # Web crawler - extracts links from URL
-poetry run python src/sitecheck/spider_file.py [file]     # Extract links from local HTML file
-poetry run python src/sitecheck/list_divs.py [URL]        # List div classes from URL
-poetry run python src/sitecheck/list_divs_in_file.py [file]  # List div classes from file
-poetry run python src/sitecheck/scrape_div.py <file> <div_class> [divs_to_remove...]  # Extract div content
+# Run scripts (from project root, using stdin)
+poetry run python src/sitecheck/read_file.py <file>                      # Read file to stdout
+poetry run python src/sitecheck/list_divs.py < file.html                 # List div classes/ids
+poetry run python src/sitecheck/list_attribs.py <element> [attrib] < file.html  # List element attributes
+poetry run python src/sitecheck/extract_div.py <div_class> < file.html   # Extract div content
+poetry run python src/sitecheck/remove_element.py <elem>... < file.html  # Remove elements
+
+# Piping example
+poetry run python src/sitecheck/read_file.py page.html | \
+  poetry run python src/sitecheck/extract_div.py content | \
+  poetry run python src/sitecheck/remove_element.py script noscript
 
 # Code quality
 poetry run black src/sitecheck tests      # Format code
@@ -32,19 +37,19 @@ poetry run pytest --cov=src/sitecheck tests/  # With coverage
 
 ## Architecture
 
-The project consists of standalone Python scripts in `src/sitecheck/`, each with a specific purpose:
+The project consists of modular Python scripts in `src/sitecheck/` that read HTML from stdin and write to stdout:
 
 | Script | Purpose | Input |
 |--------|---------|-------|
-| `spider.py` | Crawl web page, extract all links | URL |
-| `spider_file.py` | Extract links from HTML file | File path |
-| `list_divs.py` | List all div class attributes | URL |
-| `list_divs_in_file.py` | List div classes from file | File path |
-| `scrape_div.py` | Extract specific div content, optionally removing nested divs | File + class names |
+| `read_file.py` | Read file contents to stdout | File path argument |
+| `list_divs.py` | List all div class and id attributes | stdin |
+| `list_attribs.py` | Find elements and their attributes | stdin + element/attrib args |
+| `extract_div.py` | Extract content of a div by class | stdin + class arg |
+| `remove_element.py` | Remove specified HTML elements | stdin + element args |
 
-**Design pattern:** Dual input methods - most functions have URL-based and file-based variants. All HTML parsing uses BeautifulSoup.
+**Design pattern:** Unix-style pipeline - modules read HTML from stdin and write to stdout, allowing them to be chained together.
 
-**Entry points:** Each script supports CLI execution with `if __name__ == "__main__"` blocks and sensible defaults.
+**Entry points:** Each script supports CLI execution with `if __name__ == "__main__"` blocks.
 
 ## Dependencies
 
