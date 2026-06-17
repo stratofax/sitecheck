@@ -2,6 +2,8 @@
 
 Tools to check a website and its pages by analyzing HTML code.
 
+This repo is deprecated and archived. See the [Pagepull](https://github.com/cadentdev/pagepull) repo for the successor to this tool.
+
 For more information about sitecheck, see the [FAQ](docs/FAQ.md).
 
 ## Install and run this code
